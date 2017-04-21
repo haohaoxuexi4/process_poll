@@ -10,20 +10,10 @@
 #include "ThreadPool.hpp"
 #include <functional>
 using namespace std;
-class MyTask
-{
-public:
-    MyTask(){}
-    
-    void run()
-    {
-        printf("thread[%lu] : (%s)\n", pthread_self());
-       // sleep(1);
-    }
-};
+
 void Func()
 {
-    printf("hellowordk\n");
+    printf("hellowordk thread=%d\n",pthread_self());
     
 }
 int main(int argc, const char * argv[]) {

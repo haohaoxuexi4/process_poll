@@ -36,18 +36,25 @@ void ThreadPool::createpool()
     threads=new pthread_t[threadnum_];
     for (int i=0; i<threadnum_; ++i)
     {
-       pthread_create(&threads[i], NULL, WorkFunction_InThread, this);
+       if(pthread_create(&threads[i], NULL, WorkFunction_InThread, this))
+       {
+           
+       }
         
     }
 }
 ThreadPool::~ThreadPool()
 {
-    
+    for (int i=0; i<threadnum_; i++) {
+        pthread_detach(threads[i]);
+        printf("i=%d\n",i);
+    }
+    threadnum_=0;
     delete []threads;
     pthread_mutex_destroy(&mutex);
     pthread_cond_destroy(&cond);
 }
-void ThreadPool::addfunction(Task task)
+void ThreadPool::addfunction(const Task& task)
 {
     pthread_mutex_lock(&mutex);
     Task_queue.push(task);

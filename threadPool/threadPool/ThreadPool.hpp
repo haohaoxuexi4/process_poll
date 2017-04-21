@@ -22,11 +22,9 @@ public:
     ThreadPool(int threadnum);
     ~ThreadPool();
     void createpool();
-    void addfunction(Task task) ;
+    void addfunction(const Task& task) ;
     Task takeTaskFromQueue();
 private:
-    //void WorkFunction_InThread(void* arg);   //线程运行函数
-    
     int threadnum_;
     std::queue<Task> Task_queue;
     pthread_t* threads;
